@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.RV_pkg.all;
 
 entity RISCV is 
 end RISCV;
@@ -25,7 +26,7 @@ architecture RISCV_arch of RISCV is
 	end component;
 	
 	-- Component of register bank
-	entity BregRV is
+	component BregRV is
 		generic (WSIZE : natural := 32);
 		port (
 				clk, wren, rst : in std_logic;
@@ -33,7 +34,7 @@ architecture RISCV_arch of RISCV is
 				data : in std_logic_vector(WSIZE-1 downto 0);
 				ro1, ro2 : out std_logic_vector(WSIZE-1 downto 0)
 				);
-	end BregRV;
+	end component;
 	
 	-- Component of data memory
 	component ins_RAM IS
@@ -58,5 +59,24 @@ architecture RISCV_arch of RISCV is
 			q		: OUT STD_LOGIC_VECTOR (31 DOWNTO 0)
 		);
 	END component;
+
+	-- SIGNALS
+	-- instruction
+	signal instr : std_logic_vector(31 downto 0);
+	-- PC
+	signal pc : std_logic_vector(7 downto 0);
+	-- control signals
+	signal branch, MemRead, MemToRead, MemWrite, ALUSrc, RegWrite : std_logic;
+	signal ALUOp : std_logic_vector(2 downto 0);
+	signal ALUSelect : ULA_OPCODE;
+	-- immediate
+	signal imm : std_logic_vector(31 downto 0);
+	-- registers
+	signal rs1, rs2, rd : std_logic(31 downto 0);
+	-- ALU result
+	signal ALURes : std_logic_vector(31 downto 0);
+	signal ALUZero : std_logic;
+
+
 	
 end RISCV_arch;
