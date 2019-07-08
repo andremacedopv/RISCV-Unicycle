@@ -21,7 +21,7 @@ architecture RVcontrol_arhc of RVcontrol is
 	signal MemWriteS : std_logic;
 	signal ALUSrcS : std_logic;
 	signal RegWriteS : std_logic;
-	signal ALUOpS : std_logic_vector(2 downto 0));
+	signal ALUOpS : std_logic_vector(2 downto 0);
 	
 	begin
 		branch <= branchS;
@@ -106,6 +106,6 @@ architecture RVcontrol_arhc of RVcontrol is
 					ALUSrcS <= '1';
 					RegWriteS <= '1';
 					ALUOpS <= "011";
-				
-	
+			end case;
+		end process;
 end RVcontrol_arhc;
