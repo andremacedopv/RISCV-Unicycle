@@ -4,7 +4,11 @@ use ieee.numeric_std.all;
 use work.RV_pkg.all;
 
 entity RISCV is
-	port(clock : in std_logic);
+	port(clock : in std_logic;
+		  branchOUT, MemReadOUT, MemWriteOUT, ALUSrcOUT, RegWriteOUT : out std_logic;
+		  MemToRegOUT : out std_logic_vector(1 downto 0);
+		  ALUOpOUT : out std_logic_vector(2 downto 0);
+		  ALUSelectOUT : out ULA_OPCODE);
 end RISCV;
 
 architecture RISCV_arch of RISCV is 
@@ -219,4 +223,14 @@ architecture RISCV_arch of RISCV is
 	with condBranch select
 	MuxPC <= PCplus4 when '0',
 				PCplusOffset when others;
+	
+	-- out signals for test
+	branchOUT <= branch;
+	MemReadOUT <= MemRead;
+	MemWriteOUT <= MemWrite;
+	ALUSrcOUT <= ALUSrc;
+	RegWriteOUT <= RegWrite;
+	MemToRegOUT <= MemToReg;
+	ALUOpOUT <= ALUOp;
+	ALUSelectOUT <= ALUSelect;
 end RISCV_arch;
