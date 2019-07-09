@@ -25,7 +25,7 @@ architecture ULAcontrol_arch of ULAcontrol is
 				when "010" =>
 					case funct3 is
 						when "000" =>
-							if(funct7(5)) = '1')
+							if(funct7(5) = '1')
 								then ctr <= SUB_OP;
 							else ctr <= ADD_OP;
 							end if;
@@ -34,14 +34,15 @@ architecture ULAcontrol_arch of ULAcontrol is
 						when "011" => ctr <= SLTU_OP;
 						when "100" => ctr <= XOR_OP;
 						when "101" =>
-							if(funct7(5)) = '1')
+							if(funct7(5) = '1')
 								then ctr <= SRA_OP;
 							else ctr <= SRL_OP;
 							end if;
 						when "110" => ctr <= OR_OP;
 						when "111" => ctr <= AND_OP;
-				-- ILA Type
-				when "011" =>
+					end case; -- R-type
+				-- ILA Type - "011"
+				when others =>
 					case funct3 is
 						when "000" => ctr <= ADD_OP;
 						when "001" => ctr <= SLL_OP;
@@ -49,10 +50,13 @@ architecture ULAcontrol_arch of ULAcontrol is
 						when "011" => ctr <= SLTU_OP;
 						when "100" => ctr <= XOR_OP;
 						when "101" =>
-							if(funct7(5)) = '1')
+							if(funct7(5) = '1')
 								then ctr <= SRA_OP;
 							else ctr <= SRL_OP;
 							end if;
 						when "110" => ctr <= OR_OP;
 						when "111" => ctr <= AND_OP;
+					end case; -- ILA-type
+			end case; -- ALUOp
+		end process;
 end ULAcontrol_arch;
