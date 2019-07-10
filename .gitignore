@@ -25,3 +25,4 @@ simulation/modelsim/modelsim.ini
 simulation/modelsim/msim_transcript
 simulation/modelsim/rtl_work/
 simulation/modelsim/vsim.wlf
+simulation/modelsim/*.bak*

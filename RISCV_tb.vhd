@@ -9,7 +9,7 @@ end RISCV_tb;
 
 architecture RISCV_tb_arch of RISCV_tb is
 	--signals
-	signal clock : std_logic := '1';
+	signal clock : std_logic := '0';
 	signal branchOUT, MemReadOUT, MemWriteOUT, ALUSrcOUT, RegWriteOUT : std_logic;
 	signal MemToRegOUT : std_logic_vector(1 downto 0);
 	signal ALUOpOUT : std_logic_vector(2 downto 0);
@@ -48,9 +48,9 @@ begin
 	
 	clk : process
 	begin
-		clock <= '1';
-		wait for clock_period/2;
 		clock <= '0';
+		wait for clock_period/2;
+		clock <= '1';
 		wait for clock_period/2;
 	end process;
 	

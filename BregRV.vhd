@@ -14,8 +14,14 @@ end BregRV;
 
 architecture arch_BregRV of BregRV is
 	type breg_type is array (0 to 31) of std_logic_vector(31 downto 0);
-	signal breg : breg_type;
-	signal out1, out2 : std_logic_vector(WSIZE-1 downto 0);
+	signal breg : breg_type := (X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
+										 X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
+										 X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
+										 X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
+										 X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
+										 X"00000000", X"00000000", X"00000000", X"00000000", X"00000000",
+										 X"00000000", X"00000000");
+	signal out1, out2 : std_logic_vector(WSIZE-1 downto 0) := X"00000000";
 begin
 	ro1 <= out1;
 	ro2 <= out2;
@@ -26,7 +32,8 @@ begin
 				for i in 0 to 31 loop
 					breg(i) <= X"00000000";
 				end loop;
-			elsif wren = '1' then
+			end if;
+			if wren = '1' then
 				breg(to_integer(unsigned(rd))) <= data;
 			end if;
 			out1 <= breg(to_integer(unsigned(rs1)));

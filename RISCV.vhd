@@ -117,15 +117,19 @@ architecture RISCV_arch of RISCV is
 	-- signals for riscv top adders and multiplexers
 	signal PCplus4, PCplusOffset: std_logic_vector(31 downto 0);
 	signal CondBranch : std_logic;
+	signal notClock : std_logic;
 
 	begin
+	notClock <= not clock; -- clock negado
+	
 	-- PC register
-	PC_proc: process(clock)
+	PC_proc: process(notClock)
 	begin
-		if(rising_edge(clock)) then
+		if(rising_edge(notClock)) then
 			pc <= MuxPC;
 		end if;
 	end process;
+
 
 	-- Port maps of the components
 
@@ -200,7 +204,7 @@ architecture RISCV_arch of RISCV is
 	-- Data memory port map
 	DATARAM: Data_RAM
 	port map(address => AluRes(7 downto 0),
-				clock => clock,
+				clock => notClock,
 				data => bregB,
 				wren => MemWrite,
 				q => dataMemRed);
