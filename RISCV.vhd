@@ -8,7 +8,9 @@ entity RISCV is
 		  branchOUT, MemReadOUT, MemWriteOUT, ALUSrcOUT, RegWriteOUT : out std_logic;
 		  MemToRegOUT : out std_logic_vector(1 downto 0);
 		  ALUOpOUT : out std_logic_vector(2 downto 0);
-		  ALUSelectOUT : out ULA_OPCODE);
+		  ALUSelectOUT : out ULA_OPCODE;
+		  PCout : out std_LOGIC_VECTOR(7 downto 0);
+		  instrOut : out std_LOGIC_VECTOR(31 downto 0));
 end RISCV;
 
 architecture RISCV_arch of RISCV is 
@@ -87,9 +89,9 @@ architecture RISCV_arch of RISCV is
 
 	-- SIGNALS
 	-- instruction
-	signal instruction : std_logic_vector(31 downto 0);
+	signal instruction : std_logic_vector(31 downto 0) := X"00000000";
 	-- PC
-	signal pc : std_logic_vector(7 downto 0);
+	signal pc : std_logic_vector(7 downto 0) := "00000000";
 	-- control signals
 	signal branch, MemRead, MemWrite, ALUSrc, RegWrite : std_logic;
 	signal MemToReg : std_logic_vector(1 downto 0);
@@ -233,4 +235,7 @@ architecture RISCV_arch of RISCV is
 	MemToRegOUT <= MemToReg;
 	ALUOpOUT <= ALUOp;
 	ALUSelectOUT <= ALUSelect;
+	PCout <= pc;
+	instrOut <= instruction;
+	
 end RISCV_arch;

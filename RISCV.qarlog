@@ -1,0 +1,32 @@
+Quartus II Archive log --	C:/Users/Win7_VB/Documents/RISCV/RISCV.qarlog
+
+Archive:	C:/Users/Win7_VB/Documents/RISCV/RISCV.qar
+Date:		Fri Jul 05 14:26:00 2019
+Quartus II 64-Bit		13.1.4 Build 182 03/12/2014 SJ Web Edition
+
+	=========== Files Selected: ===========
+C:/Users/Win7_VB/Documents/RISCV/BregRV.vhd
+C:/Users/Win7_VB/Documents/RISCV/Data_RAM.cmp
+C:/Users/Win7_VB/Documents/RISCV/Data_RAM.qip
+C:/Users/Win7_VB/Documents/RISCV/Data_RAM.vhd
+C:/Users/Win7_VB/Documents/RISCV/RISCV.qpf
+C:/Users/Win7_VB/Documents/RISCV/RISCV.qsf
+C:/Users/Win7_VB/Documents/RISCV/RISCV.vhd
+C:/Users/Win7_VB/Documents/RISCV/RV_pkg.vhd
+C:/Users/Win7_VB/Documents/RISCV/RVcontrol.vhd
+C:/Users/Win7_VB/Documents/RISCV/RVfmt_pkg.vhd
+C:/Users/Win7_VB/Documents/RISCV/ULAcontrol.vhd
+C:/Users/Win7_VB/Documents/RISCV/data_mem.mif
+C:/Users/Win7_VB/Documents/RISCV/db/RISCV.db_info
+C:/Users/Win7_VB/Documents/RISCV/genImm32.vhd
+C:/Users/Win7_VB/Documents/RISCV/ins_RAM.cmp
+C:/Users/Win7_VB/Documents/RISCV/ins_RAM.qip
+C:/Users/Win7_VB/Documents/RISCV/ins_RAM.vhd
+C:/Users/Win7_VB/Documents/RISCV/ins_mem.mif
+C:/Users/Win7_VB/Documents/RISCV/ulaRV.vhd
+C:/altera/13.1/quartus/bin64/assignment_defaults.qdf
+c:/altera/13.1/quartus/bin64/assignment_defaults.qdf
+	======= Total: 21 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.

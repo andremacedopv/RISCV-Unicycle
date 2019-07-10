@@ -39,7 +39,7 @@ architecture ULAcontrol_arch of ULAcontrol is
 							else ctr <= SRL_OP;
 							end if;
 						when "110" => ctr <= OR_OP;
-						when "111" => ctr <= AND_OP;
+						when others => ctr <= AND_OP;
 					end case; -- R-type
 				-- ILA Type - "011"
 				when others =>
@@ -55,7 +55,7 @@ architecture ULAcontrol_arch of ULAcontrol is
 							else ctr <= SRL_OP;
 							end if;
 						when "110" => ctr <= OR_OP;
-						when "111" => ctr <= AND_OP;
+						when others => ctr <= AND_OP;
 					end case; -- ILA-type
 			end case; -- ALUOp
 		end process;
