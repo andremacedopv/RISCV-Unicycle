@@ -9,7 +9,7 @@ entity RISCV is
 		  MemToRegOUT : out std_logic_vector(1 downto 0);
 		  ALUOpOUT : out std_logic_vector(2 downto 0);
 		  ALUSelectOUT : out ULA_OPCODE;
-		  PCout : out std_LOGIC_VECTOR(7 downto 0);
+		  PCout : out std_LOGIC_VECTOR(31 downto 0);
 		  instrOut : out std_LOGIC_VECTOR(31 downto 0));
 end RISCV;
 
@@ -91,7 +91,7 @@ architecture RISCV_arch of RISCV is
 	-- instruction
 	signal instruction : std_logic_vector(31 downto 0) := X"00000000";
 	-- PC
-	signal pc : std_logic_vector(7 downto 0) := "00000000";
+	signal pc : std_logic_vector(31 downto 0) := X"00000000";
 	-- control signals
 	signal branch, MemRead, MemWrite, ALUSrc, RegWrite : std_logic;
 	signal MemToReg : std_logic_vector(1 downto 0);
@@ -110,13 +110,12 @@ architecture RISCV_arch of RISCV is
 	-- ALU result
 	signal ALURes : std_logic_vector(31 downto 0);
 	signal ALUZero : std_logic;
-	-- Muxes signals
-	signal MuxPC : std_logic_vector(7 downto 0);
-	signal MuxUlaMem, MuxBUla : std_logic_vector(31 downto 0);
+	-- Multiplexers' signals
+	signal MuxUlaMem, MuxBUla, MuxPC : std_logic_vector(31 downto 0);
 	-- Memory signals
 	signal dataMemRed : std_logic_vector(31 downto 0);
 	-- signals for riscv top adders and multiplexers
-	signal PCplus4, PCplusOffset: std_logic_vector(7 downto 0);
+	signal PCplus4, PCplusOffset: std_logic_vector(31 downto 0);
 	signal CondBranch : std_logic;
 
 	begin
@@ -132,7 +131,7 @@ architecture RISCV_arch of RISCV is
 
 	-- Instruction memory
 	INST_MEM: ins_RAM
-	port map(address => pc,
+	port map(address => pc(9 downto 2),
 				clock => clock,
 				data => X"00000000",
 				wren => '0',
@@ -217,7 +216,7 @@ architecture RISCV_arch of RISCV is
 	-- PC + 4 adder
 	PCplus4 <= std_logic_vector(signed(pc) + 4);
 	-- PC + offset adder
-	PCplusOffset <= std_logic_vector(signed(pc) + signed( imm(7 downto 0) ));
+	PCplusOffset <= std_logic_vector(signed(pc) + signed(imm));
 	-- condition for branch
 	condBranch <= branch and AluZero;
 	

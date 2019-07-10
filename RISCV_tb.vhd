@@ -14,7 +14,7 @@ architecture RISCV_tb_arch of RISCV_tb is
 	signal MemToRegOUT : std_logic_vector(1 downto 0);
 	signal ALUOpOUT : std_logic_vector(2 downto 0);
 	signal ALUSelectOUT : ULA_OPCODE;
-	signal PCout : std_LOGIC_VECTOR(7 downto 0);
+	signal PCout : std_LOGIC_VECTOR(31 downto 0);
 	signal instrOut : std_LOGIC_VECTOR(31 downto 0);
 	constant clock_period : time := 20 ns;
 	
@@ -25,7 +25,7 @@ architecture RISCV_tb_arch of RISCV_tb is
 			  MemToRegOUT : out std_logic_vector(1 downto 0);
 			  ALUOpOUT : out std_logic_vector(2 downto 0);
 			  ALUSelectOUT : out ULA_OPCODE;
-			  PCout : out std_LOGIC_VECTOR(7 downto 0);
+			  PCout : out std_LOGIC_VECTOR(31 downto 0);
 			  instrOut : out std_LOGIC_VECTOR(31 downto 0));
 	end component;
 	

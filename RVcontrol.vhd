@@ -98,8 +98,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '0';
 					ALUOpS <= "000";
 				-- ILA Type (0x13)
-				-- escrever depois "001" & X"3" no lugar do "others"
-				when  others =>
+				when  "001" & X"3" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -107,6 +106,15 @@ architecture RVcontrol_arhc of RVcontrol is
 					ALUSrcS <= '1';
 					RegWriteS <= '1';
 					ALUOpS <= "011";
+				-- Para intruções que não existem
+				when  others =>
+					branchS <= '0';
+					MemReadS <= '0';
+					MemtoRegS <= "00";
+					MemWriteS <= '0';
+					ALUSrcS <= '0';
+					RegWriteS <= '0';
+					ALUOpS <= "000";
 			end case;
 		end process;
 end RVcontrol_arhc;
