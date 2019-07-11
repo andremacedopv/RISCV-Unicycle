@@ -10,7 +10,9 @@ entity RISCV is
 		  ALUOpOUT : out std_logic_vector(2 downto 0);
 		  ALUSelectOUT : out ULA_OPCODE;
 		  PCout : out std_LOGIC_VECTOR(31 downto 0);
-		  instrOut : out std_LOGIC_VECTOR(31 downto 0));
+		  instrOut : out std_LOGIC_VECTOR(31 downto 0);
+		  bregAOUT, bregBOUT : out std_logic_vector(31 downto 0);
+		  dataMemRedOUT : out std_logic_vector(31 downto 0));
 end RISCV;
 
 architecture RISCV_arch of RISCV is 
@@ -148,7 +150,7 @@ architecture RISCV_arch of RISCV is
 	
 	-- Registers bank
 	BREGISTERS: BregRV
-	port map(clk => clock,
+	port map(clk => notClock,
 				wren => RegWrite,
 				rst => '0',
 				rs1 => rs1,
@@ -204,7 +206,7 @@ architecture RISCV_arch of RISCV is
 	-- Data memory port map
 	DATARAM: Data_RAM
 	port map(address => AluRes(7 downto 0),
-				clock => notClock,
+				clock => Clock,
 				data => bregB,
 				wren => MemWrite,
 				q => dataMemRed);
@@ -214,7 +216,7 @@ architecture RISCV_arch of RISCV is
 	MuxUlaMem <= dataMemRed when "01",
 					 AluRes when others;
 					 
-	-- Essa parte ainda não está atualizada
+	-- Essa parte ainda nÃ£o estÃ¡ atualizada
 	-- com os jumps e branches
 
 	-- PC + 4 adder
@@ -240,5 +242,7 @@ architecture RISCV_arch of RISCV is
 	ALUSelectOUT <= ALUSelect;
 	PCout <= pc;
 	instrOut <= instruction;
-	
+	bregAOUT <= bregA;
+	bregBOUT <= bregB;
+	dataMemRedOUT <= dataMemRed;
 end RISCV_arch;
