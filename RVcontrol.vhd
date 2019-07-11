@@ -55,7 +55,7 @@ architecture RVcontrol_arhc of RVcontrol is
 				when "0110111" =>
 					branchS <= '0';
 					MemReadS <= '0';
-					MemtoRegS <= "10";
+					MemtoRegS <= "11";
 					MemWriteS <= '0';
 					ALUSrcS <= '0';
 					RegWriteS <= '1';

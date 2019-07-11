@@ -243,6 +243,7 @@ architecture RISCV_arch of RISCV is
 	with MemToReg select
 	MuxUlaMem <= dataMemRed when "01",
 					 PCback when "10",
+					 std_logic_vector(imm) when "11",
 					 AluRes when others;
 					 
 	-- Essa parte ainda nÃ£o estÃ¡ atualizada
