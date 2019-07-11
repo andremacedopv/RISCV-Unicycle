@@ -12,7 +12,8 @@ entity RISCV is
 		  PCout : out std_LOGIC_VECTOR(31 downto 0);
 		  instrOut : out std_LOGIC_VECTOR(31 downto 0);
 		  bregAOUT, bregBOUT : out std_logic_vector(31 downto 0);
-		  dataMemRedOUT : out std_logic_vector(31 downto 0));
+		  dataMemRedOUT : out std_logic_vector(31 downto 0);
+		  fastClk : in std_logic);
 end RISCV;
 
 architecture RISCV_arch of RISCV is 
@@ -163,7 +164,7 @@ architecture RISCV_arch of RISCV is
 	
 	-- Registers bank
 	BREGISTERS: BregRV
-	port map(clk => notClock,
+	port map(clk => fastClk,
 				wren => RegWrite,
 				rst => '0',
 				rs1 => rs1,
@@ -220,8 +221,8 @@ architecture RISCV_arch of RISCV is
 	
 	-- Data memory port map
 	DATARAM: Data_RAM
-	port map(address => AluRes(7 downto 0),
-				clock => Clock,
+	port map(address => AluRes(9 downto 2),
+				clock => notClock,
 				data => bregB,
 				wren => MemWrite,
 				q => dataMemRed);

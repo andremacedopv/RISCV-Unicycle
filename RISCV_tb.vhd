@@ -10,6 +10,7 @@ end RISCV_tb;
 architecture RISCV_tb_arch of RISCV_tb is
 	--signals
 	signal clock : std_logic := '0';
+	signal fastClk : std_logic := '0';
 	signal branchOUT, MemReadOUT, MemWriteOUT, ALUSrcOUT, RegWriteOUT : std_logic;
 	signal MemToRegOUT : std_logic_vector(1 downto 0);
 	signal ALUOpOUT : std_logic_vector(2 downto 0);
@@ -30,7 +31,8 @@ architecture RISCV_tb_arch of RISCV_tb is
 			  PCout : out std_LOGIC_VECTOR(31 downto 0);
 			  instrOut : out std_LOGIC_VECTOR(31 downto 0);
 			  bregAOUT, bregBOUT : out std_logic_vector(31 downto 0);
-			  dataMemRedOUT : out std_logic_vector(31 downto 0));
+			  dataMemRedOUT : out std_logic_vector(31 downto 0);
+			  fastClk : in std_logic);
 	end component;
 	
 --begin architecture
@@ -50,8 +52,17 @@ begin
 				instrOut => instrOut,
 				bregAOUT => bregAOUT,
 				bregBOUT => bregBOUT,
-				dataMemRedOUT => dataMemRedOUT
+				dataMemRedOUT => dataMemRedOUT,
+				fastClk => fastClk
 	);
+	
+	Fast_clock : process
+	begin
+		fastClk <= '0';
+		wait for clock_period/4;
+		fastClk <= '1';
+		wait for clock_period/4;
+	end process;
 	
 	clk : process
 	begin
