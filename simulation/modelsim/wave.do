@@ -24,6 +24,12 @@ add wave -noupdate -radix hexadecimal /riscv_tb/riscv_tb/BREGISTERS/ro2
 add wave -noupdate -radix hexadecimal /riscv_tb/riscv_tb/BREGISTERS/breg
 add wave -noupdate -radix hexadecimal /riscv_tb/riscv_tb/BREGISTERS/out1
 add wave -noupdate -radix hexadecimal /riscv_tb/riscv_tb/BREGISTERS/out2
+add wave -noupdate /riscv_tb/riscv_tb/DATARAM/address
+add wave -noupdate /riscv_tb/riscv_tb/DATARAM/clock
+add wave -noupdate /riscv_tb/riscv_tb/DATARAM/data
+add wave -noupdate /riscv_tb/riscv_tb/DATARAM/wren
+add wave -noupdate /riscv_tb/riscv_tb/DATARAM/q
+add wave -noupdate /riscv_tb/riscv_tb/DATARAM/sub_wire0
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {59463 ps} 0}
 quietly wave cursor active 1
@@ -41,4 +47,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ps} {236657 ps}
+WaveRestoreZoom {275176 ps} {511833 ps}

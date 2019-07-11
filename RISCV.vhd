@@ -86,7 +86,9 @@ architecture RISCV_arch of RISCV is
 		  MemWrite : out std_logic;
 		  ALUSrc : out std_logic;
 		  RegWrite : out std_logic;
-		  ALUOp : out std_logic_vector(2 downto 0));
+		  ALUOp : out std_logic_vector(2 downto 0);
+		  Jal : out std_logic;
+		  Jalr : out std_logic);
 	end component;
 
 	-- SIGNALS
@@ -95,7 +97,7 @@ architecture RISCV_arch of RISCV is
 	-- PC
 	signal pc : std_logic_vector(31 downto 0) := X"00000000";
 	-- control signals
-	signal branch, MemRead, MemWrite, ALUSrc, RegWrite : std_logic := '0';
+	signal branch, MemRead, MemWrite, ALUSrc, RegWrite, Jal, Jalr : std_logic := '0';
 	signal MemToReg : std_logic_vector(1 downto 0) := "00";
 	signal ALUOp : std_logic_vector(2 downto 0) := "000";
 	signal ALUSelect : ULA_OPCODE := ADD_OP;
@@ -113,13 +115,15 @@ architecture RISCV_arch of RISCV is
 	signal ALURes : std_logic_vector(31 downto 0) := X"00000000";
 	signal ALUZero : std_logic := '0';
 	-- Multiplexers' signals
-	signal MuxUlaMem, MuxBUla, MuxPC : std_logic_vector(31 downto 0) := X"00000000";
+	signal MuxUlaMem, MuxBUla, MuxPC, MuxPC2 : std_logic_vector(31 downto 0) := X"00000000";
 	-- Memory signals
 	signal dataMemRed : std_logic_vector(31 downto 0);
 	-- signals for riscv top adders and multiplexers
 	signal PCplus4, PCplusOffset: std_logic_vector(31 downto 0) := X"00000000";
 	signal CondBranch : std_logic;
 	signal notClock : std_logic;
+	-- signal for saving the last value of PC
+	signal PCback : std_logic_vector(31 downto 0) := X"00000000";
 
 	begin
 	notClock <= not clock; -- clock negado
@@ -128,7 +132,7 @@ architecture RISCV_arch of RISCV is
 	PC_proc: process(notClock)
 	begin
 		if(rising_edge(notClock)) then
-			pc <= MuxPC;
+			pc <= MuxPC2;
 		end if;
 	end process;
 
@@ -193,7 +197,9 @@ architecture RISCV_arch of RISCV is
 				MemWrite => MemWrite,
 				ALUSrc => ALUSrc,
 				RegWrite => RegWrite,
-				ALUOp => ALUOp);
+				ALUOp => ALUOp,
+				Jal => Jal,
+				Jalr => Jalr);
 	
 	-- ULA or ALU, you choose, I don't care
 	ULAorALU: ulaRV
@@ -210,10 +216,19 @@ architecture RISCV_arch of RISCV is
 				data => bregB,
 				wren => MemWrite,
 				q => dataMemRed);
-	
+				
+	-- PcBack register
+	PCBACK_PROC: process(clock)
+	begin
+		if(rising_edge(clock)) then
+			PCback <= PCplus4;
+		end if;
+	end process;
+
 	-- Making the ALU/MEM multiplexer
 	with MemToReg select
 	MuxUlaMem <= dataMemRed when "01",
+					 PCback when "10",
 					 AluRes when others;
 					 
 	-- Essa parte ainda nÃ£o estÃ¡ atualizada
@@ -224,12 +239,17 @@ architecture RISCV_arch of RISCV is
 	-- PC + offset adder
 	PCplusOffset <= std_logic_vector(signed(pc) + signed(imm));
 	-- condition for branch
-	condBranch <= branch and AluZero;
+	condBranch <= (branch and AluZero) or Jal;
 	
-	-- Multiplexer for next PC
+	-- First Multiplexer for next PC
 	with condBranch select
 	MuxPC <= PCplus4 when '0',
 				PCplusOffset when others;
+	
+	-- Second Multiplexer for next PC
+	with Jalr select
+	MuxPC2 <= MuxPC when '0',
+				 AluRes(31 downto 1) & '0' when others;
 	
 	-- out signals for test
 	branchOUT <= branch;
