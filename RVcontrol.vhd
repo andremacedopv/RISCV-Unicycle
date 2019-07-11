@@ -35,7 +35,7 @@ architecture RVcontrol_arhc of RVcontrol is
 		begin
 			case opcode is
 				-- R-Type (0x33)
-				when "011" & X"3" =>
+				when "0110011" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -44,7 +44,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "010";
 				-- Load Upper Immediate (0x37)
-				when "011" & X"7" =>
+				when "0110111" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "10";
@@ -53,7 +53,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "000";
 				-- Load Type (0x03)
-				when "000" & X"3" =>
+				when "0000011" =>
 					branchS <= '0';
 					MemReadS <= '1';
 					MemtoRegS <= "01";
@@ -62,7 +62,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "000";
 				-- Branch Conditional Type (0x63)
-				when "110" & X"3" =>
+				when "1100011" =>
 					branchS <= '1';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -71,7 +71,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "001";
 				-- JAL (0x6F)
-				when "110" & X"F" =>
+				when "1101111" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -80,7 +80,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "010";
 				-- JALR (0x67)
-				when "110" & X"7" =>
+				when "1100111" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -89,7 +89,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "010";
 				-- Store Type (0x23)
-				when "010" & X"3" =>
+				when "0100011" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -98,7 +98,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '0';
 					ALUOpS <= "000";
 				-- ILA Type (0x13)
-				when  "001" & X"3" =>
+				when  "0010011" =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";
@@ -107,7 +107,7 @@ architecture RVcontrol_arhc of RVcontrol is
 					RegWriteS <= '1';
 					ALUOpS <= "011";
 				-- Para intruções que não existem
-				when  others =>
+				when others =>
 					branchS <= '0';
 					MemReadS <= '0';
 					MemtoRegS <= "00";

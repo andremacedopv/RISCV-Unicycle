@@ -25,20 +25,19 @@ architecture arch_BregRV of BregRV is
 begin
 	ro1 <= out1;
 	ro2 <= out2;
-	read : process(clk,wren,rst,rs1,rs2,rd,data)
+	bregProc : process(clk,wren,rst,rs1,rs2,rd,data)
 	begin
 		if rising_edge(clk) then
 			if rst = '1' then
 				for i in 0 to 31 loop
 					breg(i) <= X"00000000";
 				end loop;
-			end if;
-			if wren = '1' then
+			elsif (wren = '1') then
 				breg(to_integer(unsigned(rd))) <= data;
 			end if;
 			out1 <= breg(to_integer(unsigned(rs1)));
 			out2 <= breg(to_integer(unsigned(rs2)));
-			breg(0) <= X"00000000";
 		end if;
+		breg(0) <= X"00000000";
 	end process;
 end arch_BregRV;

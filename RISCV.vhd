@@ -93,29 +93,29 @@ architecture RISCV_arch of RISCV is
 	-- PC
 	signal pc : std_logic_vector(31 downto 0) := X"00000000";
 	-- control signals
-	signal branch, MemRead, MemWrite, ALUSrc, RegWrite : std_logic;
-	signal MemToReg : std_logic_vector(1 downto 0);
-	signal ALUOp : std_logic_vector(2 downto 0);
-	signal ALUSelect : ULA_OPCODE;
+	signal branch, MemRead, MemWrite, ALUSrc, RegWrite : std_logic := '0';
+	signal MemToReg : std_logic_vector(1 downto 0) := "00";
+	signal ALUOp : std_logic_vector(2 downto 0) := "000";
+	signal ALUSelect : ULA_OPCODE := ADD_OP;
 	-- immediate
-	signal imm : signed(31 downto 0);
+	signal imm : signed(31 downto 0) := X"00000000";
 	-- opcode
-	signal opcode : std_logic_vector(6 downto 0);
+	signal opcode : std_logic_vector(6 downto 0) := "0000000";
 	-- functs
 	signal funct3 : std_logic_vector(2 downto 0);
 	signal funct7 : std_logic_vector(6 downto 0);
 	-- registers bank
-	signal rs1, rs2, rd : std_logic_vector(4 downto 0);
-	signal bregA, bregB : std_logic_vector(31 downto 0);
+	signal rs1, rs2, rd : std_logic_vector(4 downto 0) := "00000";
+	signal bregA, bregB : std_logic_vector(31 downto 0) := X"00000000";
 	-- ALU result
-	signal ALURes : std_logic_vector(31 downto 0);
-	signal ALUZero : std_logic;
+	signal ALURes : std_logic_vector(31 downto 0) := X"00000000";
+	signal ALUZero : std_logic := '0';
 	-- Multiplexers' signals
-	signal MuxUlaMem, MuxBUla, MuxPC : std_logic_vector(31 downto 0);
+	signal MuxUlaMem, MuxBUla, MuxPC : std_logic_vector(31 downto 0) := X"00000000";
 	-- Memory signals
 	signal dataMemRed : std_logic_vector(31 downto 0);
 	-- signals for riscv top adders and multiplexers
-	signal PCplus4, PCplusOffset: std_logic_vector(31 downto 0);
+	signal PCplus4, PCplusOffset: std_logic_vector(31 downto 0) := X"00000000";
 	signal CondBranch : std_logic;
 	signal notClock : std_logic;
 

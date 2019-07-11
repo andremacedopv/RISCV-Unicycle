@@ -26,6 +26,7 @@ begin
 		elsif opcode = X"63" then fmtType <= SB_type;
 		elsif opcode = X"37" then fmtType <= U_type;
 		elsif opcode = X"6F" then fmtType <= UJ_type;
+		else fmtType <= NO_type;
 		end if;
 		
 		--Get immediate--
@@ -71,6 +72,7 @@ begin
 				end if;
 			--U_type
 			when U_type => a32 <= instr(31 downto 12) & X"000";
+			when others => a32 <= X"00000000";
 		end case;
 		
 	end process;

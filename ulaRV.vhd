@@ -17,7 +17,7 @@ end ulaRV;
 --Architecture for the RISC-V ula
 architecture arch_RV of ulaRV is
 	--Signal to receive the operations results and send to Z
-	signal a32 : std_logic_vector(WSIZE-1 downto 0);
+	signal a32 : std_logic_vector(WSIZE-1 downto 0) := X"00000000";
 begin
 	Z <= a32;
 process(A,B,opcode,a32)
@@ -45,6 +45,7 @@ process(A,B,opcode,a32)
 			when SGEU_OP => if(unsigned(A) >= unsigned(B)) then a32 <= X"00000001"; else a32 <= X"00000000"; end if;
 			when SEQ_OP => if(signed(A) = signed(B)) then a32 <= X"00000001"; else a32 <= X"00000000"; end if;
 			when SNE_OP => if(signed(A) /= signed(B)) then a32 <= X"00000001"; else a32 <= X"00000000"; end if;
+			when others => a32 <= X"00000000";
 		end case;
 			
 end process;
