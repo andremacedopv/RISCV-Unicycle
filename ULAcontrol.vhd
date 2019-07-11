@@ -19,8 +19,20 @@ architecture ULAcontrol_arch of ULAcontrol is
 			case ALUOp is
 				-- Load, Store
 				when "000" => ctr <= ADD_OP;
-				-- BEQ, BNE
-				when "001" => ctr <= SUB_OP;
+				-- Branch type
+				when "001" =>
+					case funct3 is
+						-- BEQ
+						when "000" => ctr <= SUB_OP;
+						-- BNE
+						when "001" => ctr <= SUB_OP;
+						-- BLT
+						when "100" => ctr <= SLT_OP;
+						-- BGE
+						when "101" => ctr <= SLT_OP;
+						-- others
+						when others => ctr <= SUB_OP;
+					end case; -- Branch type
 				-- R-Type
 				when "010" =>
 					case funct3 is

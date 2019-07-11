@@ -35,9 +35,11 @@ begin
 			elsif (wren = '1') then
 				breg(to_integer(unsigned(rd))) <= data;
 			end if;
-			out1 <= breg(to_integer(unsigned(rs1)));
-			out2 <= breg(to_integer(unsigned(rs2)));
+			--out1 <= breg(to_integer(unsigned(rs1)));
+			--out2 <= breg(to_integer(unsigned(rs2)));
 		end if;
+		out1 <= breg(to_integer(unsigned(rs1)));
+		out2 <= breg(to_integer(unsigned(rs2)));
 		breg(0) <= X"00000000";
 	end process;
 end arch_BregRV;

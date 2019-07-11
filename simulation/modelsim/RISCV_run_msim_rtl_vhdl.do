@@ -11,6 +11,7 @@ vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/BregRV.vhd}
 vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/Data_RAM.vhd}
 vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/ins_RAM.vhd}
 vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/RVcontrol.vhd}
+vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/BRANCHcontrol.vhd}
 vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/RISCV.vhd}
 vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/genImm32.vhd}
 vcom -93 -work work {C:/altera/13.0/projects/RISCV-Unicycle/ulaRV.vhd}

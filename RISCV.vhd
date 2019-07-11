@@ -57,6 +57,13 @@ architecture RISCV_arch of RISCV is
 		);
 	END component;
 	
+	-- Component of branch control
+	component BRANCHcontrol is 
+	port(funct3 : in std_logic_vector(2 downto 0);
+		  zeroUla : in std_logic;
+		  MakeBranch : out std_logic);
+	end component;
+
 	-- Component of instruction memory
 	component Data_RAM IS
 		PORT
@@ -124,6 +131,8 @@ architecture RISCV_arch of RISCV is
 	signal notClock : std_logic;
 	-- signal for saving the last value of PC
 	signal PCback : std_logic_vector(31 downto 0) := X"00000000";
+	-- signal that indicates if we make the branch or not
+	signal MakeBranch : std_logic := '0';
 
 	begin
 	notClock <= not clock; -- clock negado
@@ -216,6 +225,11 @@ architecture RISCV_arch of RISCV is
 				data => bregB,
 				wren => MemWrite,
 				q => dataMemRed);
+	
+	BRCTR: BRANCHcontrol
+	port map(funct3 => funct3,
+				zeroUla => AluZero,
+				MakeBranch => MakeBranch);
 				
 	-- PcBack register
 	PCBACK_PROC: process(clock)
@@ -239,7 +253,7 @@ architecture RISCV_arch of RISCV is
 	-- PC + offset adder
 	PCplusOffset <= std_logic_vector(signed(pc) + signed(imm));
 	-- condition for branch
-	condBranch <= (branch and AluZero) or Jal;
+	condBranch <= (branch and MakeBranch) or Jal;
 	
 	-- First Multiplexer for next PC
 	with condBranch select
