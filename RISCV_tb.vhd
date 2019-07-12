@@ -59,9 +59,9 @@ begin
 	Fast_clock : process
 	begin
 		fastClk <= '0';
-		wait for clock_period/4;
+		wait for clock_period/20;
 		fastClk <= '1';
-		wait for clock_period/4;
+		wait for clock_period/20;
 	end process;
 	
 	clk : process

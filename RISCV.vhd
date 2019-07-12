@@ -152,7 +152,7 @@ architecture RISCV_arch of RISCV is
 	-- Instruction memory
 	INST_MEM: ins_RAM
 	port map(address => pc(9 downto 2),
-				clock => clock,
+				clock => fastClk,
 				data => X"00000000",
 				wren => '0',
 				q => instruction);
@@ -164,7 +164,7 @@ architecture RISCV_arch of RISCV is
 	
 	-- Registers bank
 	BREGISTERS: BregRV
-	port map(clk => fastClk,
+	port map(clk => notClock,
 				wren => RegWrite,
 				rst => '0',
 				rs1 => rs1,
@@ -222,7 +222,7 @@ architecture RISCV_arch of RISCV is
 	-- Data memory port map
 	DATARAM: Data_RAM
 	port map(address => AluRes(9 downto 2),
-				clock => notClock,
+				clock => fastClk,
 				data => bregB,
 				wren => MemWrite,
 				q => dataMemRed);

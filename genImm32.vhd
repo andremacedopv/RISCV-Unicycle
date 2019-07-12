@@ -37,7 +37,7 @@ begin
 			when I_type => 
 				case instr(14 downto 12) is
 					when "001" | "101" =>
-						a32 <= X"000000" & "000" & instr(19 downto 15);
+						a32 <= X"000000" & "000" & instr(24 downto 20);
 					when others =>
 						if (instr(31) = '0') 
 							then 
